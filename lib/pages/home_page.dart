@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
 import 'package:weathercc/const.dart';
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class HomePage extends StatefulWidget {
+  final String city;
+   HomePage({super.key, required this.city});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _HomePageState extends State<HomePage> {
   
   final WeatherFactory _wf = WeatherFactory(OPEN_WEATHER_API_KEY);
   Weather? _weather;
@@ -18,7 +19,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _wf.currentWeatherByCityName("Mumbai").then((w)=>{
+    _wf.currentWeatherByCityName(widget.city).then((w)=>{
       setState(() {
         _weather = w;
       })
@@ -29,7 +30,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(body: _bodyUI(),)
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Weather"),
+        ),
+        body: _bodyUI(),)
       );
   }
   Widget _bodyUI(){

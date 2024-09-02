@@ -9,6 +9,9 @@ class CSC extends StatefulWidget {
 }
 
 class _CSCState extends State<CSC> {
+  String countryValue = "";
+  String? stateValue = "";
+  String? cityValue = "";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +19,28 @@ class _CSCState extends State<CSC> {
         appBar: AppBar(
           title: const Text("Location"),
         ),
-        body: CSCPicker(),
+        body: Column( children: [CSCPicker(
+          onCountryChanged: (value) {
+            setState(() {
+              countryValue = value;
+            });
+          },
+          onStateChanged: (value) {
+            setState(() {
+              stateValue = value;
+            });
+          },
+          onCityChanged: (value) {
+            setState(() {
+              cityValue = value;
+            });
+          },
+        ),
+        IconButton(onPressed: (){
+          Navigator.pushNamed(context, '/homepage', arguments: cityValue);
+        }, icon: const Icon(Icons.done))
+        ] 
+        ),
       ),
     );
   }
